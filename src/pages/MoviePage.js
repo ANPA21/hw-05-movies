@@ -1,19 +1,22 @@
-import { Link, Outlet } from 'react-router-dom';
+import { MovieDetails } from 'components/MovieDetails/MovieDetails';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getMovieDetails, getMovieImages } from 'utils/api';
 
 export const MoviePage = () => {
-  return (
-    <div>
-      <h1>Movie Title</h1>
-      <p>eqwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-      <ul>
-        <li>
-          <Link to="cast">Cast</Link>
-        </li>
-        <li>
-          <Link to="reviews">Reviews</Link>
-        </li>
-      </ul>
-      <Outlet />
-    </div>
-  );
+  const [movie, setMovie] = useState(null);
+
+  const { movieId } = useParams();
+
+  useEffect(() => {
+    async function getMovie() {
+      try {
+        const fetchedMovieDetais = await getMovieDetails(movieId);
+        setMovie(fetchedMovieDetais);
+      } catch (error) {}
+    }
+    getMovie();
+  }, []);
+
+  return <div>{movie && <MovieDetails movie={movie} />}</div>;
 };
