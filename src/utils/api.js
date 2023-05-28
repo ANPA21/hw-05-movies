@@ -32,5 +32,19 @@ async function getMovieReviews(id, controllerSignal) {
   });
   return r.data.results;
 }
-
-export { getMovies, getMovieDetails, getMovieCast, getMovieReviews };
+async function getMoviesByQuery(query, controllerSignal) {
+  const r = await axios.get(
+    `search/movie?query=${query}&include_adult=true&language=en-US`,
+    {
+      signal: controllerSignal,
+    }
+  );
+  return r.data.results;
+}
+export {
+  getMovies,
+  getMovieDetails,
+  getMovieCast,
+  getMovieReviews,
+  getMoviesByQuery,
+};

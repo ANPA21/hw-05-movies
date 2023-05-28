@@ -6,7 +6,7 @@ import { IMG_PATH } from 'utils/Global';
 export const Cast = () => {
   const { movieId } = useParams();
   const [movieCast, setMovieCast] = useState(null);
-  const [error, SetError] = useState(false);
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -15,11 +15,11 @@ export const Cast = () => {
     async function getCast() {
       try {
         setLoading(true);
-        SetError(false);
+        setError(false);
         const fetchedCast = await getMovieCast(movieId, controller.signal);
         setMovieCast(fetchedCast);
       } catch (error) {
-        SetError(true);
+        setError(true);
       } finally {
         setLoading(false);
       }

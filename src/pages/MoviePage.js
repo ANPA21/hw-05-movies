@@ -1,6 +1,6 @@
 import { MovieDetails } from 'components/MovieDetails/MovieDetails';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams, Link } from 'react-router-dom';
 import { getMovieDetails } from 'utils/api';
 
 export const MoviePage = () => {
@@ -9,10 +9,10 @@ export const MoviePage = () => {
   const [loading, setLoading] = useState(false);
 
   const { movieId } = useParams();
-
+  const location = useLocation();
+  // const backLinkHref = location.state?.from ?? '/';
   useEffect(() => {
     const controller = new AbortController();
-
     async function getMovie() {
       try {
         setLoading(true);
@@ -34,6 +34,7 @@ export const MoviePage = () => {
 
   return (
     <div>
+      <Link to={location.state.from}>Go Back</Link>
       {error && <div>Something went wrong, try again.</div>}
       {loading && <div>Movies are loading, please wait.</div>}
       {movie && <MovieDetails movie={movie} />}
