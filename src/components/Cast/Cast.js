@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getMovieCast } from 'utils/api';
 import { IMG_PATH } from 'utils/Global';
 
-export const Cast = () => {
+const Cast = () => {
   const { movieId } = useParams();
   const [movieCast, setMovieCast] = useState(null);
   const [error, setError] = useState(false);
@@ -46,3 +46,5 @@ export const Cast = () => {
     </div>
   );
 };
+
+export default Cast;

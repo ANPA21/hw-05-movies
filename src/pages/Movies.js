@@ -4,7 +4,7 @@ import { getMoviesByQuery } from 'utils/api';
 import { MovieList } from 'components/MovieList/MovieList';
 import { useSearchParams } from 'react-router-dom';
 
-export const Movies = () => {
+const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -47,3 +47,4 @@ export const Movies = () => {
     </div>
   );
 };
+export default Movies;

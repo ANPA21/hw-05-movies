@@ -1,7 +1,8 @@
+import { Suspense } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { IMG_PATH } from 'utils/Global';
 
-export const MovieDetails = ({ movie }) => {
+const MovieDetails = ({ movie, from }) => {
   return (
     <div>
       <img src={`${IMG_PATH}${movie.poster_path}`} alt="" width="500px" />
@@ -18,14 +19,21 @@ export const MovieDetails = ({ movie }) => {
         <p>Additional Information</p>
         <ul>
           <li>
-            <Link to="cast">Cast</Link>
+            <Link to="cast" state={{ from: from }}>
+              Cast
+            </Link>
           </li>
           <li>
-            <Link to="reviews">Reviews</Link>
+            <Link to="reviews" state={{ from: from }}>
+              Reviews
+            </Link>
           </li>
         </ul>
       </div>
-      <Outlet />
+      <Suspense fallback={<div>Loading additional information</div>}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };
+export default MovieDetails;

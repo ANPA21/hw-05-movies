@@ -1,16 +1,18 @@
-import { MovieDetails } from 'components/MovieDetails/MovieDetails';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, lazy } from 'react';
 import { useLocation, useParams, Link } from 'react-router-dom';
 import { getMovieDetails } from 'utils/api';
+const MovieDetails = lazy(() =>
+  import('../components/MovieDetails/MovieDetails')
+);
 
-export const MoviePage = () => {
+const MoviePage = () => {
   const [movie, setMovie] = useState(null);
   const [error, SetError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const { movieId } = useParams();
   const location = useLocation();
-  // const backLinkHref = location.state?.from ?? '/';
+  const fromRef = useRef(location.state?.from ?? '/');
   useEffect(() => {
     const controller = new AbortController();
     async function getMovie() {
@@ -34,10 +36,12 @@ export const MoviePage = () => {
 
   return (
     <div>
-      <Link to={location.state.from}>Go Back</Link>
+      <Link to={fromRef.current}>Go Back</Link>
       {error && <div>Something went wrong, try again.</div>}
       {loading && <div>Movies are loading, please wait.</div>}
-      {movie && <MovieDetails movie={movie} />}
+      {movie && <MovieDetails movie={movie} from={fromRef.current} />}
     </div>
   );
 };
+
+export default MoviePage;
