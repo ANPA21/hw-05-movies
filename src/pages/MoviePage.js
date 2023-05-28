@@ -5,18 +5,38 @@ import { getMovieDetails } from 'utils/api';
 
 export const MoviePage = () => {
   const [movie, setMovie] = useState(null);
+  const [error, SetError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { movieId } = useParams();
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function getMovie() {
       try {
-        const fetchedMovieDetais = await getMovieDetails(movieId);
+        setLoading(true);
+        SetError(false);
+        const fetchedMovieDetais = await getMovieDetails(
+          movieId,
+          controller.signal
+        );
         setMovie(fetchedMovieDetais);
-      } catch (error) {}
+      } catch (error) {
+        SetError(true);
+      } finally {
+        setLoading(false);
+      }
     }
     getMovie();
+    return () => controller.abort;
   }, [movieId]);
 
-  return <div>{movie && <MovieDetails movie={movie} />}</div>;
+  return (
+    <div>
+      {error && <div>Something went wrong, try again.</div>}
+      {loading && <div>Movies are loading, please wait.</div>}
+      {movie && <MovieDetails movie={movie} />}
+    </div>
+  );
 };

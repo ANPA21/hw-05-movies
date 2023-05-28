@@ -13,9 +13,24 @@ async function getMovies(controllerSignal) {
   return r.data.results;
 }
 
-async function getMovieDetails(id) {
-  const r = await axios.get(`/movie/${id}?language=en-US`);
+async function getMovieDetails(id, controllerSignal) {
+  const r = await axios.get(`/movie/${id}?language=en-US`, {
+    signal: controllerSignal,
+  });
   return r.data;
 }
 
-export { getMovies, getMovieDetails };
+async function getMovieCast(id, controllerSignal) {
+  const r = await axios.get(`/movie/${id}}/credits?language=en-US`, {
+    signal: controllerSignal,
+  });
+  return r.data;
+}
+async function getMovieReviews(id, controllerSignal) {
+  const r = await axios.get(`/movie/${id}}/reviews?language=en-US&page=1`, {
+    signal: controllerSignal,
+  });
+  return r.data.results;
+}
+
+export { getMovies, getMovieDetails, getMovieCast, getMovieReviews };
