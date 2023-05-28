@@ -1,18 +1,25 @@
 import { Suspense } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { IMG_PATH } from 'utils/Global';
+import { IMG_PATH, IMG_NOT_FOUND } from 'utils/Global';
 
-const MovieDetails = ({ movie, from }) => {
+const MovieDetails = ({
+  movie: { poster_path, title, vote_average, overview, genres },
+  from,
+}) => {
   return (
     <div>
-      <img src={`${IMG_PATH}${movie.poster_path}`} alt="" width="500px" />
+      <img
+        src={poster_path ? `${IMG_PATH}${poster_path}` : `${IMG_NOT_FOUND}`}
+        alt="title"
+        width="500px"
+      />
       <div>
-        <h1>{movie.title}</h1>
-        <p>User Rating {movie.vote_average}</p>
+        <h1>{title}</h1>
+        <p>User Rating {vote_average}</p>
         <h2>Overview</h2>
-        <p>{movie.overview}</p>
+        <p>{overview}</p>
         <h3>Genres</h3>
-        <p>{movie.genres.map(genre => `${genre.name}  `)}</p>
+        <p>{genres.map(genre => `${genre.name}  `)}</p>
       </div>
 
       <div>

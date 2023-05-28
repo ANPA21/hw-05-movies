@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieCast } from 'utils/api';
-import { IMG_PATH } from 'utils/Global';
+import { IMG_PATH, IMG_NOT_FOUND } from 'utils/Global';
 
 const Cast = () => {
   const { movieId } = useParams();
@@ -32,17 +32,23 @@ const Cast = () => {
       {error && <div>Something went wrong, try again.</div>}
       {loading && <div>Movies are loading, please wait.</div>}
       {movieCast &&
-        movieCast.cast.slice(0, 10).map(actor => (
-          <div key={actor.id}>
-            <img
-              src={`${IMG_PATH}${actor.profile_path}`}
-              alt={actor.name}
-              width="200px"
-            />
-            <h1>{actor.name}</h1>
-            <p>Character: {actor.character}</p>
-          </div>
-        ))}
+        movieCast.cast
+          .slice(0, 10)
+          .map(({ id, name, profile_path, character }) => (
+            <div key={id}>
+              <img
+                src={
+                  profile_path
+                    ? `${IMG_PATH}${profile_path}`
+                    : `${IMG_NOT_FOUND}`
+                }
+                alt={name}
+                width="200"
+              />
+              <h1>{name}</h1>
+              <p>Character: {character}</p>
+            </div>
+          ))}
     </div>
   );
 };
