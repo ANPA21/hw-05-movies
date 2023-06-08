@@ -21,7 +21,6 @@ const Movies = () => {
     async function getMovies() {
       try {
         setLoading(true);
-        setError(false);
         if (urlQuery) {
           const fetchedMovies = await getMoviesByQuery(
             urlQuery,
@@ -30,17 +29,17 @@ const Movies = () => {
           setMovies(fetchedMovies);
         }
       } catch (error) {
-        setError(true);
+        if (error.code !== 'ERR_CANCELED') setError(true);
       } finally {
         setLoading(false);
       }
     }
     getMovies();
-    return () => controller.abort;
+    return () => controller.abort();
   }, [urlQuery]);
   return (
     <div>
-      <Searchbar onSubmit={handleSubmit} />
+      <Searchbar onSubmit={handleSubmit} value={urlQuery} />
       {error && <div>Something went wrong, try again.</div>}
       {loading && <div>Movies are loading, please wait.</div>}
       {urlQuery && <MovieList movies={movies} />}

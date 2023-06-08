@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 import {
   Input,
   Label,
@@ -8,14 +7,11 @@ import {
   StyledSearchbar,
 } from './Searchbar.styled';
 
-export const Searchbar = ({ onSubmit }) => {
-  const [inputValue, setInputValue] = useState('');
-  const handeInputChange = event => {
-    setInputValue(event.target.value);
-  };
+export const Searchbar = ({ onSubmit, value }) => {
   const handleSubmit = event => {
     event.preventDefault();
-    onSubmit(inputValue);
+    console.log(value);
+    onSubmit(event.target.query.value);
   };
   return (
     <StyledSearchbar className="searchbar">
@@ -25,12 +21,13 @@ export const Searchbar = ({ onSubmit }) => {
         </SearchBtn>
 
         <Input
+          name="query"
           className="input"
           type="text"
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
-          onChange={handeInputChange}
+          defaultValue={value}
         />
       </Searchform>
     </StyledSearchbar>

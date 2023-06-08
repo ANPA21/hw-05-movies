@@ -39,7 +39,7 @@ const MoviePage = () => {
       <Link to={fromRef.current}>Go Back</Link>
       {error && <div>Something went wrong, try again.</div>}
       {loading && <div>Movies are loading, please wait.</div>}
-      {movie && <MovieDetails movie={movie} from={fromRef.current} />}
+      {movie && <MovieDetails movie={movie} />}
     </div>
   );
 };

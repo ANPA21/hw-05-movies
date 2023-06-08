@@ -4,7 +4,6 @@ import { IMG_PATH, IMG_NOT_FOUND } from 'utils/Global';
 
 const MovieDetails = ({
   movie: { poster_path, title, vote_average, overview, genres },
-  from,
 }) => {
   return (
     <div>
@@ -26,14 +25,10 @@ const MovieDetails = ({
         <p>Additional Information</p>
         <ul>
           <li>
-            <Link to="cast" state={{ from: from }}>
-              Cast
-            </Link>
+            <Link to="cast">Cast</Link>
           </li>
           <li>
-            <Link to="reviews" state={{ from: from }}>
-              Reviews
-            </Link>
+            <Link to="reviews">Reviews</Link>
           </li>
         </ul>
       </div>
